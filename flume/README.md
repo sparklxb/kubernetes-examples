@@ -1,6 +1,8 @@
 # 使用kubernetes部署单节点flume
-注意：该项目主要是通过使用kubernetes部署单节点flume，向kubernetes部署的kafka集群发送测试数据
-kafka集群部署请参考：https://github.com/zhengbo0/kafka
+注意：
+* 所有操作都是在vagrant coreos操作，部署flume组件可以单独使用，如果和kafka整合，部署顺序为flume -> zookeeper -> kafka
+* 该项目主要是通过使用kubernetes部署单节点flume，向kubernetes部署的kafka集群发送测试数据
+kafka集群部署请参考：https://github.com/k8sp/kubernetes-examples/tree/master/kafka
 如果仅作单节点测试，请把如下flume-example.conf中如下内容删除掉
 ```
 docker.sinks.kafkaSink.type = org.apache.flume.sink.kafka.KafkaSink
