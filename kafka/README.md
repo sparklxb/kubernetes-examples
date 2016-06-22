@@ -2,6 +2,7 @@
 注意：
 * 所有操作都是在vagrant coreos操作，部署顺序为zookeeper集群 -> kafka集群,默认kafka使用自带的zookeeper
 * kubernetes部署zookeeper集群的操作步骤可以参考：https://github.com/k8sp/kubernetes-examples/tree/master/zookeeper
+
 #### kafka镜像步骤如下:
 * 准备制作kafka镜像的Dockerfile
 * 生成本地镜像,在Dockerfile目录下执行： docker build -t kafka .
