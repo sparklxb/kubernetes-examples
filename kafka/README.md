@@ -1,4 +1,6 @@
 # 使用kubernetes部署kafka集群
+注意：
+* 所有操作都是在vagrant coreos操作，部署顺序为zookeeper集群 -> kafka集群,默认kafka使用自带的zookeeper
 #### kafka镜像步骤如下:
 * 准备制作kafka镜像的Dockerfile
 * 生成本地镜像,在Dockerfile目录下执行： docker build -t kafka .
@@ -16,7 +18,7 @@ docker push daocloud.io/zhengbo0/kafka
  kubectl create -f kube/kafka-2-service.yaml
  kubectl create -f kube/kafka-3-service.yaml
  ```
-* 查看已发布的service ,kubernetes部署zookeeper集群的操作步骤可以参考：https://github.com/zhengbo0/zookeeper
+* 查看已发布的service ,kubernetes部署zookeeper集群的操作步骤可以参考：https://github.com/k8sp/kubernetes-examples/tree/master/zookeeper
 ```
  #kubectl get svc
 kafka         10.0.0.132   <none>        9092/TCP,7203/TCP            4d
