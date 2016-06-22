@@ -1,0 +1,135 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: tf-worker0
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        tf-worker: "0"
+    spec:
+      containers:
+      - name: tf-worker0
+        image: tensorflow/tf_grpc_server
+        args:
+          - --cluster_spec=worker|tf-worker0:2222;tf-worker1:2222,ps|tf-ps0:2222;tf-ps1:2222
+          - --job_name=worker
+          - --task_id=0
+        ports:
+        - containerPort: 2222
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tf-worker0
+  labels:
+    tf-worker: "0"
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 2222
+  selector:
+    tf-worker: "0"
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: tf-worker1
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        tf-worker: "1"
+    spec:
+      containers:
+      - name: tf-worker1
+        image: tensorflow/tf_grpc_server
+        args:
+          - --cluster_spec=worker|tf-worker0:2222;tf-worker1:2222,ps|tf-ps0:2222;tf-ps1:2222
+          - --job_name=worker
+          - --task_id=1
+        ports:
+        - containerPort: 2222
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tf-worker1
+  labels:
+    tf-worker: "1"
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 2222
+  selector:
+    tf-worker: "1"
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: tf-ps0
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        tf-ps: "0"
+    spec:
+      containers:
+      - name: tf-ps0
+        image: tensorflow/tf_grpc_server
+        args:
+          - --cluster_spec=worker|tf-worker0:2222;tf-worker1:2222,ps|tf-ps0:2222;tf-ps1:2222
+          - --job_name=ps
+          - --task_id=0
+        ports:
+        - containerPort: 2222
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tf-ps0
+  labels:
+    tf-ps: "0"
+spec:
+  ports:
+  - port: 2222
+  selector:
+    tf-ps: "0"
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: tf-ps1
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        tf-ps: "1"
+    spec:
+      containers:
+      - name: tf-ps1
+        image: tensorflow/tf_grpc_server
+        args:
+          - --cluster_spec=worker|tf-worker0:2222;tf-worker1:2222,ps|tf-ps0:2222;tf-ps1:2222
+          - --job_name=ps
+          - --task_id=1
+        ports:
+        - containerPort: 2222
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tf-ps1
+  labels:
+    tf-ps: "1"
+spec:
+  ports:
+  - port: 2222
+  selector:
+    tf-ps: "1"
+---
+
