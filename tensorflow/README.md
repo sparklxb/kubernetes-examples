@@ -8,7 +8,7 @@
 
 * 单机TensorFlow
 * 用TensorFlow Serving和k8s给模型提供服务(未测试)
-* TensorFlow　k8s集群
+* TensorFlow k8s集群
 
 ##单机TensorFlow
 
@@ -20,7 +20,7 @@
 docker run -it -p 8888:8888 tensorflow/tensorflow
 ```
 
-在本机浏览器访问http://localhost:8888/或者从外部访问,如http://172.24.3.171:8888/.可看到jupyter界面,里面提供:
+在本机浏览器访问http://localhost:8888/或者从外部访问,如http://172.24.3.171:8888/ .可看到jupyter界面,里面提供:
 
 * 网页版编辑器
 * 网页版terminal(远程连接运行TensorFlow节点)
